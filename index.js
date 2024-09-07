@@ -25,7 +25,7 @@ function sendWOLPacket(macAddress, broadcastAddress) {
 // // 目标计算机的MAC地址（十六进制格式）
 // const macAddress = Buffer.from([0xe0, 0x73, 0xe7, 0xb8, 0x8c, 0x14]);
 // // 局域网的广播地址
-// const broadcastAddress = '192.168.31.255';
+// const broadcastAddress = '192.168.31.21';
 async function send(){
     const data = await getData();
     if(data===null)
@@ -33,11 +33,9 @@ async function send(){
     let ip,className,mac;
     [className,ip,mac]= data
     for (let i=0;i<className.length;++i){
-        const ipSplit = ip[i].split(".");
-        const ipFt=ipSplit[0]+"."+ipSplit[1]+"."+ipSplit[2]+".255"
-        console.log(mac[i],ipFt)
+        console.log(className[i],ip[i],mac[i])
         // 发送唤醒包
-        // sendWOLPacket(mac[i], ipFt);
+        sendWOLPacket(mac[i], ip[i]);
     }
 }
 

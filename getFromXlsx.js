@@ -6,11 +6,15 @@ async function getData(){
     // 遍历工作表中具有值的所有行
     worksheet.eachRow(function(row, rowNumber) {
         if (row.values[1]===undefined){
-            console.log(numberToColumnLetter(rowNumber)+":1没有值,请检查excel")
+            console.log("A"+rowNumber+"没有值,请检查excel")
             return null
         }
         if (row.values[2]===undefined){
-            console.log(numberToColumnLetter(rowNumber)+":2没有值,请检查")
+            console.log("B"+rowNumber+"没有值,请检查excel")
+            return null
+        }
+        if (row.values[3]===undefined){
+            console.log("C"+rowNumber+"没有值,请检查excel")
             return null
         }
     });
@@ -19,12 +23,12 @@ async function getData(){
     let mac=[]
     worksheet.eachRow(function(row, rowNumber) {
         if (mac===null){
-            console.log(numberToColumnLetter(rowNumber)+":2的mac格式错误,请检查")
+            console.log(numberToColumnLetter(rowNumber)+":1的mac格式错误,请检查")
             return null
         }
-        className.push(row.values[1].trim().split(" ")[0])
-        ip.push(row.values[1].trim().split(" ")[1])
-        mac.push(hexStringToUint8Array(row.values[2]))
+        className.push(row.values[1].trim())
+        ip.push(row.values[2].trim())
+        mac.push(hexStringToUint8Array(row.values[3].trim()))
     });
     return [className,ip,mac]
 }
@@ -59,5 +63,7 @@ function numberToColumnLetter(columnNumber) {
 
     return columnName;
 }
+
+// getData().then(result=>console.log(result))
 
 module.exports=getData
